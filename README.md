@@ -1,2 +1,9 @@
 # htb-writeups
-documentation for my journey through different htb machines and challenges
+
+Documentation for my journey through different HTB machines and challenges.
+
+## Machines
+
+| Machine | OS | Difficulty | Key Technique |
+|---|---|---|---|
+| [Vaccine](./Vaccine.md) | Linux | Easy | FTP anon access, GPG, sudo binary escalation |
