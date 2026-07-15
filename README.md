@@ -1,6 +1,6 @@
 # htb-writeups
 
-Documentation for my journey through different HTB machines and challenges.
+Documentation of my journey through different HTB machines and challenges.
 
 ## Machines
 
