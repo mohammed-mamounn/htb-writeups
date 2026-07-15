@@ -6,13 +6,13 @@ Documentation for my journey through different HTB machines and challenges.
 
 | Machine | OS | Difficulty | Key Technique |
 |---|---|---|---|
-| [Vaccine](./Vaccine) | Linux | Very Easy | ? |
+| [Vaccine](./Vaccine.md) | Linux | Very Easy | ? |
 | [Redeemer](./Redeemer.md) | Linux | Very Easy | ? |
 | [Fawn](./Fawn.md) | Linux | Very Easy | ? |
 | [Fawn](./Fawn.md) | Linux | Very Easy | ? |
 
 
-
+## Challenges
 | Challenge | Type | Difficulty | Key Technique |
 |---|---|---|---|
 | [Untrusted Node](./Untrusted_Node.md) | Quantum | Medium | ? |
