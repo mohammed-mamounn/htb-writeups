@@ -6,4 +6,6 @@ Documentation for my journey through different HTB machines and challenges.
 
 | Machine | OS | Difficulty | Key Technique |
 |---|---|---|---|
-| [Vaccine](./Vaccine.md) | Linux | Easy | FTP anon access, GPG, sudo binary escalation |
+| [Vaccine](./Vaccine.md) | Linux | Very Easy | ? |
+| [Redeemer](./Redeemer.md) | Linux | Very Easy | ? |
+| [Fawn](./Fawn.md) | Linux | Very Easy | ? |
