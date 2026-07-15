@@ -9,7 +9,6 @@ Documentation of my journey through different HTB machines and challenges.
 | [Vaccine](./Vaccine.md) | Linux | Very Easy | ? |
 | [Redeemer](./Redeemer.md) | Linux | Very Easy | ? |
 | [Fawn](./Fawn.md) | Linux | Very Easy | ? |
-| [Fawn](./Fawn.md) | Linux | Very Easy | ? |
 
 
 ## Challenges
