@@ -127,6 +127,17 @@ cat /root/root.txt
 
 Root flag captured.
 
+## What I Learned
+
+- A weak or default password can be far more dangerous than a "real" exploit, this whole chain started with a crackable zip password.
+- `zip2john` + `john` is a fast way to turn a protected zip into a password.
+- Hardcoded credentials in source files (like the MD5 hash in `index.php`) are a common way to find a way in, and MD5 by itself is not a safe way to store passwords, it's fast to crack or reverse, especially for common/short passwords.
+- SQL injection isn't limited to reading data — with tools like sqlmap's `--os-shell`, it can be escalated all the way to command execution on the OS.
+- A raw reverse shell from netcat is fragile, Spawning a pty with Python and setting `stty raw -echo` + `export TERM=xterm` turns it into a proper interactive shell.
+- Always run `sudo -l` after landing on a box, permissive sudo rules for something as "harmless" as a text editor can be a direct path to root (GTFOBins is a great reference for these).
+- Editors like `vi`/`vim` should basically never be allowed to run as root via sudo without restrictions, since they can spawn a shell.
+- 
+
 ### Summary of the full chain
 1. Anonymous FTP → downloaded `backup.zip`
 2. `zip2john` + `john` (rockyou.txt) → cracked the zip password
