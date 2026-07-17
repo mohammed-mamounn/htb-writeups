@@ -59,6 +59,14 @@ GET flag
 
 This gave me the flag directly.
 
+## What I Learned
+
+- Default nmap scans only cover the top 1000 ports — a full `-p-` scan is worth running whenever an initial scan comes back empty, since a service can easily be hiding outside the default range.
+- Redis is an in-memory database, which makes it very fast, but that speed is usually meant for internal/trusted use and it should never be exposed to the internet without protection.
+- Redis has no authentication by default. Anyone who can reach the port can connect with `redis-cli` and run commands immediately.
+- Basic Redis commands (`INFO`, `SELECT <index>`, `KEYS *`, `GET <key>`) are enough to fully enumerate and read every piece of data stored in an instance.
+- When a service like Redis runs as root with no access control, "getting in" and "getting everything" can be the same step.
+
 ### Summary of the full chain
 1. Full port scan (`nmap -p- -sV`) → found Redis on TCP 6379 (default full-range/default scan missed it)
 2. Installed `redis-tools` to get `redis-cli`
