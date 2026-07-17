@@ -99,7 +99,7 @@ Once stabilized, `id` shows we're the `postgres` user. Checking sudo privileges:
 sudo -l
 ```
 
-This shows `postgres` can run `/bin/vi` as root without a password, specifically against the PostgreSQL host-based authentication config:
+This shows `postgres` can run `/bin/vi` as root without a password:
 
 ```
 sudo /bin/vi /etc/postgresql/11/main/pg_hba.conf
