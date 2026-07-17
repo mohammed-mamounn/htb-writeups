@@ -89,7 +89,7 @@ After that, I had a much more interactive shell, and after some looking around, 
 
 ---
 
-## Privilege Escalation (completed / researched)
+## Privilege Escalation
 
 *The notes above stopped after the initial reverse shell and user flag. I looked up how the box's root path continues and finished it below so the write-up is complete.*
 
