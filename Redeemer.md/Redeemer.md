@@ -26,9 +26,8 @@ to view the available flags & how to connect to a remote Redis server.
 
 ---
 
-## Connecting to Redis (completed / researched)
+## Connecting to Redis
 
-*My notes stopped right after installing `redis-tools`. I looked up the rest of the Redeemer box and finished the write-up below.*
 
 Redis is unauthenticated by default in this box, so a plain connection with the `-h` flag is enough:
 
@@ -36,28 +35,29 @@ Redis is unauthenticated by default in this box, so a plain connection with the 
 redis-cli -h <target-ip>
 ```
 
-Once connected, the `INFO` command dumps server statistics, including the version:
+Once connected, the `INFO` command showed me server statistics, including the version:
 
 ```
 INFO
 ```
 
 This confirms the server is running **Redis 5.0.7**.
+I tried looking online for some known vulnerabilities for this specific version of Redis but no luck.
 
-Redis can hold multiple numbered databases. To see how many keys live in database 0:
+Redis can hold multiple numbered databases, I found 1 database in position 0, next I wanted to see how many keys live in it:
 
 ```
 SELECT 0
 KEYS *
 ```
 
-This returned 4 keys, one of which is named `flag`. Reading it out:
+This returned 4 keys, one of which is named `flag`. ```cat``` did not cut it here as this is a databse so instead:
 
 ```
 GET flag
 ```
 
-This returns the flag directly — Redeemer doesn't have a separate user/root split, since Redis (running as root, with no authentication) hands over the flag as soon as you can talk to it.
+This gave me the flag directly.
 
 ### Summary of the full chain
 1. Full port scan (`nmap -p- -sV`) → found Redis on TCP 6379 (default full-range/default scan missed it)
@@ -68,6 +68,6 @@ This returns the flag directly — Redeemer doesn't have a separate user/root sp
 6. `GET flag` → flag captured
 
 ### Remediation
-- Require authentication (`requirepass`) on the Redis instance.
-- Bind Redis to localhost/internal interfaces only — don't expose 6379 to untrusted networks.
+- Require authentication on the Redis instance.
+- Bind Redis to localhost/internal interfaces only so port 6379 is not exposed to untrusted networks.
 - Don't store secrets/flags in plaintext inside a database with no access control.
