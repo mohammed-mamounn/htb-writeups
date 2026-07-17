@@ -6,9 +6,9 @@ Documentation of my journey through different HTB machines and challenges.
 
 | Machine | OS | Difficulty | Key Technique |
 |---|---|---|---|
-| [Vaccine](./Vaccine.md) | Linux | Very Easy | ? |
-| [Redeemer](./Redeemer.md) | Linux | Very Easy | ? |
-| [Fawn](./Fawn.md) | Linux | Very Easy | ? |
+| [Vaccine](./Vaccine.md) | Linux | Very Easy | SQL injection → ```sqlmap --os-shell``` for RCE, then GTFOBins sudo vi privilege escalation |
+| [Redeemer](./Redeemer.md) | Linux | Very Easy | Unauthenticated Redis access |
+| [Fawn](./Fawn.md) | Linux | Very Easy | Anonymous FTP login |
 
 
 ## Challenges
