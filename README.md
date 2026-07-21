@@ -15,4 +15,4 @@ Documentation of my journey through different HTB machines and challenges.
 ## Challenges
 | Challenge | Type | Difficulty | Key Technique |
 |---|---|---|---|
-| [Untrusted Node](./Untrusted_Node) | Quantum | Medium | Photon Number Splitting attack on BB84 QKD → key extraction |
+| [Untrusted Node](./Untrusted_Node) (Advanced) | Quantum | Medium | Photon Number Splitting attack on BB84 QKD → key extraction |
