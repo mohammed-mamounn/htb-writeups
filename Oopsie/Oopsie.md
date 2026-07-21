@@ -7,7 +7,7 @@ Let's start with reconnaissance.
 nmap <IP> -sC -sV
 ```
 
-Ports 80 (http) & 22 (ssh) are open. Starting with SSH is out of the question as to what the password could be, because I don't have any lead as to what the password could be.
+Ports 80 (http) & 22 (ssh) are open. Starting with SSH is out of the question because I don't have any lead as to what the password could be.
 
 So I tried visiting the website, & honestly there was nothing special.
 
