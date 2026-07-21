@@ -12,7 +12,7 @@ Ports 80 (http) & 22 (ssh) are open. Starting with SSH is out of the question be
 So I tried visiting the website, & honestly there was nothing special.
 
 ## Web Proxying with Burp Suite
-A web proxy in general is an intermediary server that sits between you & the internet. Your request first goes to the proxy, which then fetches the web page from the server & returns it to you, effectively hiding the site you visit from the server's perspective.
+A web proxy is an intermediary server that sits between you and the internet. Your request goes to the proxy first, which fetches the page from the destination server and returns it to you, effectively hiding your identity (IP address for example) from that server
 
 Burp Suite is the industry-standard platform used for web app security testing. It is essentially an interception proxy sitting between our web browser & the web server, allowing us to view, analyze & modify HTTP/S traffic in real time.
 
