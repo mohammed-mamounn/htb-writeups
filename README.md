@@ -6,12 +6,13 @@ Documentation of my journey through different HTB machines and challenges.
 
 | Machine | OS | Difficulty | Key Technique |
 |---|---|---|---|
-| [Vaccine](./Vaccine.md) | Linux | Very Easy | SQL injection → ```sqlmap --os-shell``` for RCE, then GTFOBins sudo vi privilege escalation |
-| [Redeemer](./Redeemer.md) | Linux | Very Easy | Unauthenticated Redis access |
-| [Fawn](./Fawn.md) | Linux | Very Easy | Anonymous FTP login |
+| [Vaccine](./Vaccine) | Linux | Very Easy | SQL injection → ```sqlmap --os-shell``` for RCE, then GTFOBins sudo vi privilege escalation |
+| [Redeemer](./Redeemer) | Linux | Very Easy | Unauthenticated Redis access |
+| [Fawn](./Fawn) | Linux | Very Easy | Anonymous FTP login |
+| [Oopsie](./Oopsie) | Linux | Very Easy | Cookie value manipulation (user_id) → PHP webshell upload → PATH hijack on SUID binary |
 
 
 ## Challenges
 | Challenge | Type | Difficulty | Key Technique |
 |---|---|---|---|
-| [Untrusted Node](./Untrusted_Node.md) | Quantum | Medium | ? |
+| [Untrusted Node](./Untrusted_Node) | Quantum | Medium | Photon Number Splitting attack on BB84 QKD → key extraction |
