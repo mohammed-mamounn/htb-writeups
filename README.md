@@ -9,7 +9,7 @@ Documentation of my journey through different HTB machines and challenges.
 | [Vaccine](./Vaccine) | Linux | Very Easy | SQL injection → ```sqlmap --os-shell``` for RCE, then GTFOBins sudo vi privilege escalation |
 | [Redeemer](./Redeemer) | Linux | Very Easy | Unauthenticated Redis access |
 | [Fawn](./Fawn) | Linux | Very Easy | Anonymous FTP login |
-| [Oopsie](./Oopsie) | Linux | Very Easy | Cookie value manipulation (user_id) → PHP webshell upload → PATH hijack on SUID binary |
+| [Oopsie](./Oopsie) (Advanced) | Linux | Very Easy | Cookie value manipulation (user_id) → PHP webshell upload → PATH hijack on SUID binary |
 
 
 ## Challenges
