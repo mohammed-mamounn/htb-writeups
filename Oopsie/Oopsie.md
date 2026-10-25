@@ -11,7 +11,9 @@ Ports 80 (http) & 22 (ssh) are open. Starting with SSH is out of the question be
 
 So I tried visiting the website, & honestly there was nothing special.
 
-## Web Proxying, Burp Suite, and Web Crawlers
+## Methodology
+
+### Web Proxying, Burp Suite, and Web Crawlers
 A web proxy is an intermediary server that sits between you and the internet. Your request goes to the proxy first, which fetches the page from the destination server and returns it to you, effectively hiding your identity (IP address for example) from that server
 
 Burp Suite is the industry-standard platform used for web app security testing. It is essentially an interception proxy sitting between our web browser & the web server, allowing us to view, analyze & modify HTTP/S traffic in real time.
@@ -25,19 +27,19 @@ After disabling the interception of Burp & configuring the proxy of our browser 
 After logging in, I was presented with a dashboard and multible tabs, I started navigating through the website, and I came across an uploads section. Unfortunately, the upload function was blocked for me and required super admin right.
 
 
-## Cookie Manipulation
+### Cookie Manipulation
 A cookie is a text file with data created by the web server & stored by the browser on your computer to identify a session.
 
 I noticed on top, the search bar had "user_id=2". So I did what any sensible human being would do, changed it to 1! and suddenly details of an admin account were presented to me instead of my normal guest credentials, the details being the role (admin) and user id (34322). Afterwards I inspected the page, went to the storage section, and then the cookies sub-section, and edited the role to be admin, and the user id to 34322 and just like that the upload functoin which was only 
 
 
-## Foothold
+### Foothold
 Now for the foothold, I tried uploading a PHP reverse shell.
 After uploading, the next step would be to locate the directory holding our shell and calling for it. The most logical guess was /uploads/ (which was eventually proven correct) but I decided to do it the professional way using gobuster, and sure enough, the result was /uploads
 I started my listener `nc -lvnp 1234` & immediately requested my shell `http://<ip>/uploads/php-reverse-shell.php` & it worked.
 
 
-## Lateral Movement
+### Lateral Movement
 I upgraded the shell via `python3 -c "import pty; pty.spawn('/bin/bash')"`.
 Now it was time for lateral movement since I can't do anything as `www-data`.
 
@@ -103,7 +105,15 @@ So what happened next is we (unprivilged) executed ./bugtracker. --> bugtracker 
 
 Finally, as root, I browsed around the files for a bit and was able to locate the root flag!
 
-### Summary of the full chain
+## What I Learned
+- Client-side data (cookies, hidden parameters like user_id) can never be trusted for authorization, always make sure role/permission enforcement happens server-side, since anything sent to the browser can be edited before it comes back
+- Burp Suite is essential for mapping an application's real attack surface. Features and directories that aren't visible through normal browsing (like /cdn-cgi/login) can surface once traffic is intercepted and inspected.
+- Upload functionality is a common foothold vector, if file type/extension isn't strictly validated server-side, a webshell can be uploaded and executed directly.
+- After landing a shell, it's worth treating web root files (config files, DB connection files, etc.) as a first place to search for hardcoded credentials, plaintext secrets in source code are a very common lateral movement path.
+- Enumerating group memberships (id) can reveal privilege escalation paths that aren't obvious from sudo -l alone
+- SUID binaries are only as safe as the code behind them. A SUID root binary that calls another program without specifying its absolute path is vulnerable to $PATH hijacking, since the shell will search user-writable directories (like /tmp) before trusted system ones if $PATH is manipulated.
+
+## Summary of the Full Chain
 1. Full port scan (`nmap -sC -sV`) → found ports 80 (http) & 22 (ssh) open
 2. Set up Burp Suite as an intercepting proxy to map hidden directories, discovered `/cdn-cgi/login`
 3. Found and manipulated the "role"/user_id cookie value to gain admin access to the dashboard
@@ -123,10 +133,3 @@ Finally, as root, I browsed around the files for a bit and was able to locate th
 - Never grant SUID permissions to binaries that call other executables without specifying an absolute path — always hardcode paths (e.g. `/bin/cat`) or explicitly sanitize `$PATH` within the program.
 - Regularly audit SUID/SGID binaries on the system (`find / -perm -4000`) and remove unnecessary SUID bits.
 
-## What I Learned
-- Client-side data (cookies, hidden parameters like user_id) can never be trusted for authorization, always make sure role/permission enforcement happens server-side, since anything sent to the browser can be edited before it comes back
-- Burp Suite is essential for mapping an application's real attack surface. Features and directories that aren't visible through normal browsing (like /cdn-cgi/login) can surface once traffic is intercepted and inspected.
-- Upload functionality is a common foothold vector, if file type/extension isn't strictly validated server-side, a webshell can be uploaded and executed directly.
-- After landing a shell, it's worth treating web root files (config files, DB connection files, etc.) as a first place to search for hardcoded credentials, plaintext secrets in source code are a very common lateral movement path.
-- Enumerating group memberships (id) can reveal privilege escalation paths that aren't obvious from sudo -l alone
-- SUID binaries are only as safe as the code behind them. A SUID root binary that calls another program without specifying its absolute path is vulnerable to $PATH hijacking, since the shell will search user-writable directories (like /tmp) before trusted system ones if $PATH is manipulated.

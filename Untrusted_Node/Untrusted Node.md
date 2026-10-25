@@ -1,3 +1,5 @@
+# Untrusted Node | Challenge | Medium | Quantum
+
 ## Introduction
 
 Quantum Key Distribution (QKD) is a method of establishing a cryptographic key between two parties using the laws of quantum mechanics rather than mathematical complexity. The most well-known protocol is BB84, which encodes each bit of the key into the quantum state of a single photon. The security guarantee comes from a fundamental property of quantum physics — measuring a quantum state disturbs it irreversibly. This means any eavesdropper trying to intercept the key leaves a detectable trace in the error rate, and the two legitimate parties can detect the intrusion and abort.
@@ -16,7 +18,7 @@ I started by downloading the challenge archive which contained four source files
 
 ---
 
-## Finding the Vulnerability
+### Finding the Vulnerability
 
 Reading the Transmitter's `generate_circuits()` method, I noticed this:
 
@@ -38,11 +40,11 @@ The multi-photon emission completely breaks the quantum security guarantee.
 
 ---
 
-## Exploitation
+### Exploitation
 
 I wrote a Python exploit using `pwntools` to interact with the server programmatically.
 
-### Phase 1 — Intercepting Qubits
+#### Phase 1 — Intercepting Qubits
 
 The Trusted Node gets to specify a measurement gate for every qubit before they reach the Receiver. Gates are `0` (Z-basis), `1` (X-basis), or `-1` (pass through untouched).
 
@@ -62,7 +64,7 @@ for k in sync_signal:
 
 BB84 uses two measurement bases and TX randomly picks one per bit. By measuring in both Z and X, one of my two results is guaranteed to match TX's choice. I stored both results per chunk and waited for the server to return the measurement outcomes. The Receiver meanwhile got k−2 qubits per bit, completely unaware anything had been intercepted.
 
-### Phase 2 — Manipulating Reconciliation
+#### Phase 2 — Manipulating Reconciliation
 
 After measurements, TX and RX perform classical reconciliation — they compare which bases they used and keep only the bits where they matched. As the Trusted Node I also get to report which gates the Receiver supposedly used, and this is where I manipulated the outcome.
 
@@ -81,7 +83,7 @@ for k in sync_signal:
         idx += 1
 ```
 
-### Key Recovery
+#### Key Recovery
 
 TX reports back which positions it found basis matches at. Every matched position is a passthrough qubit, and the Receiver's gate at that position equals TX's basis by definition. I looked up my measurement in that same basis and recorded the bit:
 
@@ -96,7 +98,7 @@ for ci, k in enumerate(sync_signal):
 
 Both TX and RX derive the final key with `sha256(key_bits_string).digest()`. I applied the same derivation and now held the exact 32-byte key they computed.
 
-### Getting the Flag
+#### Getting the Flag
 
 I XOR'd the command `TX|FETCH|SECRET` with the recovered key and sent the ciphertext to the server:
 

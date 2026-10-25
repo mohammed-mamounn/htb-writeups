@@ -26,7 +26,7 @@ to view the available flags & how to connect to a remote Redis server.
 
 ---
 
-## Connecting to Redis
+### Connecting to Redis
 
 
 Redis is unauthenticated by default in this box, so a plain connection with the `-h` flag is enough:
@@ -67,7 +67,7 @@ This gave me the flag directly.
 - Basic Redis commands (`INFO`, `SELECT <index>`, `KEYS *`, `GET <key>`) are enough to fully enumerate and read every piece of data stored in an instance.
 - When a service like Redis runs as root with no access control, "getting in" and "getting everything" can be the same step.
 
-### Summary of the full chain
+## Summary of the Full Chain
 1. Full port scan (`nmap -p- -sV`) → found Redis on TCP 6379 (default full-range/default scan missed it)
 2. Installed `redis-tools` to get `redis-cli`
 3. Connected unauthenticated with `redis-cli -h <target-ip>`
@@ -75,7 +75,7 @@ This gave me the flag directly.
 5. `SELECT 0` → `KEYS *` → found a key named `flag`
 6. `GET flag` → flag captured
 
-### Remediation
+## Remediation
 - Require authentication on the Redis instance.
 - Bind Redis to localhost/internal interfaces only so port 6379 is not exposed to untrusted networks.
 - Don't store secrets/flags in plaintext inside a database with no access control.

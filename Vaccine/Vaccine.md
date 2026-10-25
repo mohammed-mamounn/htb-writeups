@@ -28,11 +28,11 @@ john --wordlist=<path> hashfile
 
 After finding the password, I extracted the zip's contents and found `index.php`, which had a hard-coded password hash inside it.
 
-## Cracking the hash
+### Cracking the hash
 
 John takes a word from your provided wordlist & runs it through the same hashing algorithm used by the machine to hash a password. If, after running through the whole wordlist, a word matches the hash it's trying to crack, then that word is the password.
 
-## Getting a shell
+### Getting a shell
 
 I looked up an MD5 reverser online & got the password `qwerty789`. Next, I reused the same credentials to log into the admin dashboard.
 
@@ -46,7 +46,7 @@ I used sqlmap to automate the process, passing the URL and the session cookie fo
 sqlmap -u <URL> --cookie="your-cookie=..." --os-shell
 ```
 
-## Shell handling / netcat listener
+### Shell handling / netcat listener
 
 Where the target machine is the one initiating the connection to our machine (a reverse shell as opposed to a bind shell).
 
@@ -136,9 +136,8 @@ Root flag captured.
 - A raw reverse shell from netcat is fragile, Spawning a pty with Python and setting `stty raw -echo` + `export TERM=xterm` turns it into a proper interactive shell.
 - Always run `sudo -l` after landing on a box, permissive sudo rules for something as "harmless" as a text editor can be a direct path to root (GTFOBins is a great reference for these).
 - Editors like `vi`/`vim` should basically never be allowed to run as root via sudo without restrictions, since they can spawn a shell.
-- 
 
-### Summary of the full chain
+## Summary of the Full Chain
 1. Anonymous FTP → downloaded `backup.zip`
 2. `zip2john` + `john` (rockyou.txt) → cracked the zip password
 3. Extracted zip → found `index.php` with an MD5 password hash
@@ -151,7 +150,7 @@ Root flag captured.
 10. `sudo -l` → `postgres` can run `/bin/vi` as root on `pg_hba.conf`
 11. GTFOBins vi escape (`:!bash`) → root shell → root flag
 
-### Remediation
+## Remediation
 - Remove backups/config files with credentials from anonymously-accessible FTP shares.
 - Store credentials with a strong, salted hashing algorithm (bcrypt/argon2) instead of raw MD5.
 - Sanitize/parameterize all SQL inputs in the dashboard to prevent injection.
